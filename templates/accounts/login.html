@@ -28,8 +28,17 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #f2f2f2;
+        }  
+        .errormsg{
+            margin-top: 12px;
+            margin-bottom: 10px;
+            text-align: justify;
+            color: red;
+            font-family: 'Poppins', sans-serif;
+            
+            padding: 6px 12px;
+            border-radius: 5px;
         }
-
         .login-container {
             background-color: #ffffff;
             border-radius: 5px;
@@ -38,6 +47,7 @@
             margin: 0 auto;
             margin-top: 100px;
             padding: 20px;
+           
         }
 
         .login-container h2 {
@@ -74,15 +84,21 @@
             background-color: rgb(121, 115, 115);
         }
         .signupstyle{
-            padding-top: 10px;
+            padding-top: 15px;
             font-family: 'Poppins', sans-serif;
+            text-align: center;
         }
 
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h2>Login</h2>
+          <h2>Login</h2>
+          <div class="errormsg">
+            {% for message in messages %}
+               <p>{{ message }}</p> 
+            {% endfor %}
+        </div>
         <form id="login-form" action="" method="post" >
             {% csrf_token %}
             <div class="input-container">
@@ -96,9 +112,8 @@
             <button class="login-button" type="submit">Login</button>
         </form>
         <div class="signupstyle">
-              Did'nt signup yet?<a href="{% url 'register' %}">signup</a> 
+              <u>Did'nt signup yet?<a href="{% url 'register' %}">signup</a> </u>
         </div>
-      
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -110,3 +125,6 @@
 <link rel="stylesheet" href="../static/js/cart.js">
 </body>
 </html>
+
+
+

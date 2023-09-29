@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate , login, logout
 
 from django.contrib.auth.decorators import login_required
 
-
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -26,9 +26,9 @@ def register_user(request):
             if form.is_valid():
                 form.save()
                 gustusername = form.cleaned_data.get('username')
-                messages.success(request,'Account created for' + gustusername)
+                messages.success(request,'Account created for ' +' ' + gustusername)
                 return redirect('login')
-
+            
         context = {'form':form}
         return render(request, 'accounts/register.html',context)
 
@@ -48,7 +48,7 @@ def login_user(request):
                 login(request, user)
                 return redirect('home')
             else:
-                messages.info(request,'Username or Passsword is incorrect!')
+                messages.error(request,'Username or Passsword is incorrect!')
 
         return render(request, 'accounts/login.html')
 
@@ -60,8 +60,9 @@ def logout_user(request):
 
 
 def home(request):
-
+    
     if request.user.is_authenticated:
+        profile = Customer.objects.get_or_create(user=request.user)
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer,complete=False)
         item = order.orderitem_set.all()
